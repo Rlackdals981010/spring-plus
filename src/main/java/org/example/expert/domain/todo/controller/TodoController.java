@@ -2,10 +2,12 @@ package org.example.expert.domain.todo.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.expert.client.dto.WeatherDto;
 import org.example.expert.domain.common.annotation.Auth;
 import org.example.expert.domain.common.dto.AuthUser;
 import org.example.expert.domain.todo.dto.request.TodoSaveRequest;
+import org.example.expert.domain.todo.dto.response.TodoPageResponse;
 import org.example.expert.domain.todo.dto.response.TodoResponse;
 import org.example.expert.domain.todo.dto.response.TodoSaveResponse;
 import org.example.expert.domain.todo.service.TodoService;
@@ -18,6 +20,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class TodoController {
@@ -36,12 +39,12 @@ public class TodoController {
     public ResponseEntity<Page<TodoResponse>> getTodos(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam WeatherDto weatherDto,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime startDay,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime endDay
+            @RequestParam String weather,
+            @RequestParam(required = false) LocalDate startDay,
+            @RequestParam(required = false) LocalDate endDay
 
     ) {
-        return ResponseEntity.ok(todoService.getTodos(page, size,weatherDto,startDay,endDay));
+        return ResponseEntity.ok(todoService.getTodos(page, size,weather,startDay,endDay));
     }
 
     @GetMapping("/todos/{todoId}")
@@ -50,7 +53,7 @@ public class TodoController {
     }
 
     @GetMapping("/todos/")
-    public ResponseEntity<Page<TodoResponse>> getNewTodos(
+    public ResponseEntity<Page<TodoPageResponse>> getNewTodos(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) String title,

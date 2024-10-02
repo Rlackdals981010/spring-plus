@@ -1,6 +1,7 @@
 package org.example.expert.domain.todo.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.expert.client.WeatherClient;
 import org.example.expert.client.dto.WeatherDto;
 import org.example.expert.domain.common.dto.AuthUser;
@@ -19,8 +20,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -52,11 +56,15 @@ public class TodoService {
         );
     }
 
-    public Page<TodoResponse> getTodos(int page, int size, WeatherDto weatherDto, LocalDateTime startDay, LocalDateTime endDay) {
+    //        Page<Todo> todos = todoRepository.findAllByOrderByModifiedAtDesc(pageable);
+
+    public Page<TodoResponse> getTodos(int page, int size, String weather, LocalDate startDay, LocalDate endDay) {
         Pageable pageable = PageRequest.of(page - 1, size);
 
-//        Page<Todo> todos = todoRepository.findAllByOrderByModifiedAtDesc(pageable);
-        Page<Todo> todos = todoRepository.findAllByOrderAndWeatherOrDateRangeByModifiedAtDesc(pageable,weatherDto.getWeather(),startDay,endDay);
+        LocalDateTime startDateTime = (startDay != null) ? startDay.atStartOfDay() : null;
+        LocalDateTime endDateTime = (endDay != null) ? endDay.atTime(LocalTime.MAX) : null;
+
+        Page<Todo> todos = todoRepository.findAllByOrderAndWeatherOrDateRangeByModifiedAtDesc(pageable,weather,startDateTime,endDateTime);
 
         return todos.map(todo -> new TodoResponse(
                 todo.getId(),
