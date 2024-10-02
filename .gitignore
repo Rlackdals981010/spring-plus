@@ -38,3 +38,9 @@ out/
 
 ### properties ###
 *.properties
+
+
+### ENV ###
+
+dev.env
+.env
