@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 public interface TodoRepository extends JpaRepository<Todo, Long>,TodoRepositoryCustom {
@@ -26,8 +27,8 @@ public interface TodoRepository extends JpaRepository<Todo, Long>,TodoRepository
             "AND (:startDay IS NULL OR t.modifiedAt >= :startDay) " +
             "AND (:endDay IS NULL OR t.modifiedAt <= :endDay) " +
             "ORDER BY t.modifiedAt DESC")
-    Page<Todo> findAllByOrderAndWeatherAndDateRangeByModifiedAtDesc(Pageable pageable,
+    Page<Todo> findAllByOrderAndWeatherOrDateRangeByModifiedAtDesc(Pageable pageable,
                                                                     @Param("weather") String weather,
-                                                                    @Param("startDay") LocalDate startDay,
-                                                                    @Param("endDay") LocalDate endDay);
+                                                                    @Param("startDay") LocalDateTime startDay,
+                                                                    @Param("endDay") LocalDateTime endDay);
 }
