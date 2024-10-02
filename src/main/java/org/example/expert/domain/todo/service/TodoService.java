@@ -94,9 +94,13 @@ public class TodoService {
         );
     }
 
-    public Page<TodoPageResponse> getNewTodos(int page, int size, String title, LocalDateTime startDay, LocalDateTime endDay, String nickName) {
+    public Page<TodoPageResponse> getNewTodos(int page, int size, String title,  LocalDate startDay, LocalDate endDay, String nickName) {
         Pageable pageable = PageRequest.of(page - 1, size);
-        Page<TodoPageResponse> todos = todoRepository.findAllByTitleOrDateRangeOrManagerNickName(title, startDay, endDay, nickName, pageable);
+
+        LocalDateTime startDateTime = (startDay != null) ? startDay.atStartOfDay() : null;
+        LocalDateTime endDateTime = (endDay != null) ? endDay.atTime(LocalTime.MAX) : null;
+
+        Page<TodoPageResponse> todos = todoRepository.findAllByTitleOrDateRangeOrManagerNickName(title, startDateTime, endDateTime, nickName, pageable);
         return todos.map(todo -> new TodoPageResponse(
                 todo.getTitle(),
                 todo.getManagerCount(),

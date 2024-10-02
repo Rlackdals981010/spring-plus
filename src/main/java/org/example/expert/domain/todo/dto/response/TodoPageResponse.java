@@ -1,13 +1,15 @@
 package org.example.expert.domain.todo.dto.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+
 public class TodoPageResponse {
 
-    private String title;
-    private long managerCount;
-    private long commentCount;
+    private final String title;
+    private final long managerCount;
+    private final long commentCount;
 
     public TodoPageResponse(String title, long managerCount, long commentCount) {
         this.title = title;

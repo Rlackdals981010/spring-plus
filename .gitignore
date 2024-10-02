@@ -36,11 +36,10 @@ out/
 ### VS Code ###
 .vscode/
 
-### properties ###
-*.properties
-
-
 ### ENV ###
 
 dev.env
 .env
+
+## resources ###
+

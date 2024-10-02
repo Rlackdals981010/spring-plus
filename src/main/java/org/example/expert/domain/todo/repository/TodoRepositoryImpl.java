@@ -10,15 +10,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+
+import static org.example.expert.domain.comment.entity.QComment.comment;
+import static org.example.expert.domain.manager.entity.QManager.manager;
 
 public class TodoRepositoryImpl implements TodoRepositoryCustom{
 
     private JPAQueryFactory jpaQueryFactory;
     QTodo todo = QTodo.todo;
+
+    public TodoRepositoryImpl(JPAQueryFactory jpaQueryFactory) {
+        this.jpaQueryFactory = jpaQueryFactory;
+    }
 
     @Override
     public Optional<Todo> findByIdWithUser(Long todoId) {
@@ -52,14 +58,15 @@ public class TodoRepositoryImpl implements TodoRepositoryCustom{
 
         List<TodoPageResponse> results = jpaQueryFactory
                 .select(Projections.constructor(TodoPageResponse.class,
-                        todo.title,                                   // 제목
-                        todo.managers.size().as("managerCount"),        // 담당자 수
-                        todo.comments.size().as("commentCount")         // 총 댓글 개수
+                        todo.title,
+                        manager.countDistinct().as("managerCount"),
+                        comment.countDistinct().as("commentCount")
                 ))
                 .from(todo)
-                .leftJoin(todo.managers).fetchJoin()
-                .leftJoin(todo.comments).fetchJoin()
+                .leftJoin(todo.managers, manager).fetchJoin()
+                .leftJoin(todo.comments, comment).fetchJoin()
                 .where(booleanBuilder)
+                .groupBy(todo.id)
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();

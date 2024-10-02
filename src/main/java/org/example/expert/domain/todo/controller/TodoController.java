@@ -52,15 +52,16 @@ public class TodoController {
         return ResponseEntity.ok(todoService.getTodo(todoId));
     }
 
-    @GetMapping("/todos/")
+    @GetMapping("/todos/new")
     public ResponseEntity<Page<TodoPageResponse>> getNewTodos(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) String title,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime startDay,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime endDay,
+            @RequestParam(required = false) LocalDate startDay,
+            @RequestParam(required = false) LocalDate endDay,
             @RequestParam(required = false) String nickName
     ) {
+
         return ResponseEntity.ok(todoService.getNewTodos(page, size,title,startDay,endDay,nickName));
     }
 
