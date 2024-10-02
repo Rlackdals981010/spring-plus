@@ -6,6 +6,7 @@ import org.example.expert.client.dto.WeatherDto;
 import org.example.expert.domain.common.dto.AuthUser;
 import org.example.expert.domain.common.exception.InvalidRequestException;
 import org.example.expert.domain.todo.dto.request.TodoSaveRequest;
+import org.example.expert.domain.todo.dto.response.TodoPageResponse;
 import org.example.expert.domain.todo.dto.response.TodoResponse;
 import org.example.expert.domain.todo.dto.response.TodoSaveResponse;
 import org.example.expert.domain.todo.entity.Todo;
@@ -83,5 +84,15 @@ public class TodoService {
                 todo.getCreatedAt(),
                 todo.getModifiedAt()
         );
+    }
+
+    public Page<TodoPageResponse> getNewTodos(int page, int size, String title, LocalDateTime startDay, LocalDateTime endDay, String nickName) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        Page<TodoPageResponse> todos = todoRepository.findAllByTitleOrDateRangeOrManagerNickName(title, startDay, endDay, nickName, pageable);
+        return todos.map(todo -> new TodoPageResponse(
+                todo.getTitle(),
+                todo.getManagerCount(),
+                todo.getCommentCount()
+        ));
     }
 }
