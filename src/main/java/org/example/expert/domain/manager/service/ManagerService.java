@@ -3,6 +3,9 @@ package org.example.expert.domain.manager.service;
 import lombok.RequiredArgsConstructor;
 import org.example.expert.domain.common.dto.AuthUser;
 import org.example.expert.domain.common.exception.InvalidRequestException;
+import org.example.expert.domain.log.entity.Log;
+import org.example.expert.domain.log.repository.LogRepository;
+import org.example.expert.domain.log.service.LogService;
 import org.example.expert.domain.manager.dto.request.ManagerSaveRequest;
 import org.example.expert.domain.manager.dto.response.ManagerResponse;
 import org.example.expert.domain.manager.dto.response.ManagerSaveResponse;
@@ -13,10 +16,13 @@ import org.example.expert.domain.todo.repository.TodoRepository;
 import org.example.expert.domain.user.dto.response.UserResponse;
 import org.example.expert.domain.user.entity.User;
 import org.example.expert.domain.user.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,12 +35,18 @@ public class ManagerService {
     private final UserRepository userRepository;
     private final TodoRepository todoRepository;
 
+    @Autowired
+    private LogService logService;
+
     @Transactional
     public ManagerSaveResponse saveManager(AuthUser authUser, long todoId, ManagerSaveRequest managerSaveRequest) {
         // 일정을 만든 유저
         User user = User.fromAuthUser(authUser);
         Todo todo = todoRepository.findById(todoId)
                 .orElseThrow(() -> new InvalidRequestException("Todo not found"));
+
+        //여기서 로그 생성
+        logService.saveLog(user,todo);
 
         if (todo.getUser() == null || !ObjectUtils.nullSafeEquals(user.getId(), todo.getUser().getId())) {
             throw new InvalidRequestException("담당자를 등록하려고 하는 유저가 유효하지 않거나, 일정을 만든 유저가 아닙니다.");
@@ -93,4 +105,5 @@ public class ManagerService {
 
         managerRepository.delete(manager);
     }
+
 }
