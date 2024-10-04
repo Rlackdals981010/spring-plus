@@ -32,12 +32,13 @@ import java.time.LocalTime;
 public class TodoService {
 
     private final TodoRepository todoRepository;
-    private final UserRepository userRepository;
     private final WeatherClient weatherClient;
 
     @Transactional
     public TodoSaveResponse saveTodo(AuthUser authUser, TodoSaveRequest todoSaveRequest) {
+        System.out.println(authUser.getId());
         User user = User.fromAuthUser(authUser);
+        System.out.println(user.getId());
 
         String weather = weatherClient.getTodayWeather();
 
