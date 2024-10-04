@@ -74,7 +74,7 @@ public class TodoRepositoryImpl implements TodoRepositoryCustom {
                 ))
                 .distinct()
                 .from(todo)
-//                .join(todo.managers, manager).fetchJoin()
+                .join(todo.managers, manager)
                 .where(
                         eqTitle(title),
                         eqNickName(nickName),

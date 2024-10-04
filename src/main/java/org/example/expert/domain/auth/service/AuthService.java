@@ -32,12 +32,13 @@ public class AuthService {
         }
 
         String encodedPassword = passwordEncoder.encode(signupRequest.getPassword());
-
+        String nickName = signupRequest.getNickName();
         UserRole userRole = UserRole.of(signupRequest.getUserRole());
 
         User newUser = new User(
                 signupRequest.getEmail(),
                 encodedPassword,
+                nickName,
                 userRole
         );
         User savedUser = userRepository.save(newUser);
