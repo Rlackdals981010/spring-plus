@@ -29,10 +29,10 @@ public class Todo extends Timestamped {
     private User user;
 
     @OneToMany(mappedBy = "todo", cascade = CascadeType.REMOVE)
-    @BatchSize(size = 10) // fetch 조인 미적용으로 인한 N+1 문제 때문에 작성,
     private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "todo", cascade = CascadeType.PERSIST)
+    @BatchSize(size = 10) // fetch 조인 미적용으로 인한 N+1 문제 때문에 작성,
     private List<Manager> managers = new ArrayList<>();
 
     public Todo(String title, String contents, String weather, User user) {

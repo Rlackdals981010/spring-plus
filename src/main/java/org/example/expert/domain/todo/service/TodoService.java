@@ -100,6 +100,11 @@ public class TodoService {
         LocalDateTime startDateTime = (startDay != null) ? startDay.atStartOfDay() : null;
         LocalDateTime endDateTime = (endDay != null) ? endDay.atTime(LocalTime.MAX) : null;
 
+        System.out.println(title);
+        System.out.println(startDay);
+        System.out.println(endDay);
+
+
         Page<TodoPageResponse> todos = todoRepository.findAllByTitleOrDateRangeOrManagerNickName(title, startDateTime, endDateTime, nickName, pageable);
         return todos.map(todo -> new TodoPageResponse(
                 todo.getTitle(),
