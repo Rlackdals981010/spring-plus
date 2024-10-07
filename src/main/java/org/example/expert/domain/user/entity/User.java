@@ -38,8 +38,8 @@ public class User extends Timestamped {
     }
 
     public static User fromAuthUser(AuthUser authUser) {
-        //String userRole =authUser.getAuthorities().iterator().next().getAuthority();
-        String userRole = authUser.getAuthorities().toString().substring(1,authUser.getAuthorities().toString().length()-1);
+        String userRole =authUser.getAuthorities().iterator().next().getAuthority();
+//        String userRole = authUser.getAuthorities().toString().substring(1,authUser.getAuthorities().toString().length()-1);
         return new User(authUser.getId(),authUser.getEmail(), UserRole.of(userRole));
     }
 
