@@ -1,4 +1,7 @@
 # LV3. 12 AWS
+## 1 AWS로 jar 실행
+![스크린샷 2024-10-07 오후 3 53 51](https://github.com/user-attachments/assets/7e5bb864-e714-4f02-b845-ca33befee05e)
+
 
 # LV3. 13 대용량 데이터 조회
 
