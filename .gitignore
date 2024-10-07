@@ -38,8 +38,9 @@ out/
 
 ### ENV ###
 
-dev.env
+src/main/resources/properties/dev.env
 .env
-
+env.properties
+propertyConfig
 ## resources ###
 

@@ -12,6 +12,7 @@ import org.example.expert.domain.user.enums.UserRole;
 @Entity
 @NoArgsConstructor
 // 테이블에 인덱스 추가
+//@Table(name = "users",indexes = {@Index(name = "idx_user_nickname", columnList = "nickname")})
 @Table(name = "users")
 public class User extends Timestamped {
 
