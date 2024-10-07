@@ -17,12 +17,14 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-import static com.sun.org.apache.xalan.internal.xsltc.compiler.Constants.CHARACTERS;
+
+
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class UserService {
+    private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -59,6 +61,7 @@ public class UserService {
     }
 
     // 유저 100만개 생성
+    @Transactional
     public void createUsersBulk() {
         int bulk = 1000000;
         int nicknameLength = 8;
@@ -91,4 +94,14 @@ public class UserService {
         }
 
     }
+
+    public Long getUserFromBulk(String nickname) {
+//
+//        User user = userRepository.findByNickname(nickname).orElseThrow(() -> new InvalidRequestException("User not found"));
+//        return user.getId();
+        return userRepository.findUserResponseByNickname(nickname);
+    }
+
+    // 인덱스를 사용한 조회
+
 }

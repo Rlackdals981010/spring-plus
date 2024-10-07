@@ -26,8 +26,15 @@ public class UserController {
         userService.changePassword(authUser.getId(), userChangePasswordRequest);
     }
 
+    // 100만개 생성 api
     @PostMapping("/users/create/bulk")
     public void createUsersBulk(){
         userService.createUsersBulk();
+    }
+
+    // 닉네임으로 조회 api
+    @GetMapping("/users/bulk/get/{nickname}")
+    public ResponseEntity<Long> getUserFromBulk(@PathVariable String nickname) {
+        return ResponseEntity.ok(userService.getUserFromBulk(nickname));
     }
 }
