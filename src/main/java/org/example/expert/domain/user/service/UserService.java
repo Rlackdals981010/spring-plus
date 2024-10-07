@@ -1,14 +1,23 @@
 package org.example.expert.domain.user.service;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.example.expert.domain.common.exception.InvalidRequestException;
 import org.example.expert.domain.user.dto.request.UserChangePasswordRequest;
 import org.example.expert.domain.user.dto.response.UserResponse;
 import org.example.expert.domain.user.entity.User;
+import org.example.expert.domain.user.enums.UserRole;
 import org.example.expert.domain.user.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
+
+import static com.sun.org.apache.xalan.internal.xsltc.compiler.Constants.CHARACTERS;
 
 @Service
 @RequiredArgsConstructor
@@ -47,5 +56,39 @@ public class UserService {
                 !userChangePasswordRequest.getNewPassword().matches(".*[A-Z].*")) {
             throw new InvalidRequestException("새 비밀번호는 8자 이상이어야 하고, 숫자와 대문자를 포함해야 합니다.");
         }
+    }
+
+    // 유저 100만개 생성
+    public void createUsersBulk() {
+        int bulk = 1000000;
+        int nicknameLength = 8;
+        String password = "1234QWER!!";
+        UserRole userRole = UserRole.ROLE_USER;
+        String gmail = "@gmail.com";
+
+        Set<String> nicknames = new HashSet<>();
+        Random random = new Random();
+
+        while (nicknames.size() < bulk) {
+            StringBuilder nickname = new StringBuilder(nicknameLength);
+            for (int i = 0; i < nicknameLength; i++) {
+                int index = random.nextInt(CHARACTERS.length());
+                nickname.append(CHARACTERS.charAt(index));
+            }
+            nicknames.add(nickname.toString());
+        }
+
+        String[] nicknameArray = nicknames.toArray(new String[0]);
+
+        for(String nickName : nicknameArray){
+            User newUser = new User(
+                    nickName+gmail,
+                    password,
+                    nickName,
+                    userRole
+            );
+            userRepository.save(newUser);
+        }
+
     }
 }
