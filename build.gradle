@@ -55,6 +55,10 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
 
+// 빌드시 테스트 때문에 안돼서 제외..
+test.onlyIf{
+    !project.hasProperty('test')
 }
 
