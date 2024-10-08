@@ -1,8 +1,5 @@
-FROM openjdk:17-jdk
+FROM openjdk:17-jdk-slim
+ADD /build/libs/*.jar app.jar
+COPY .env .env
 
-ARG JAR_FILE=build/libs/expert-0.0.1-SNAPSHOT.jar
-ADD ${JAR_FILE} docker-springplus.jar
-
-EXPOSE 8080
-
-ENTRYPOINT ["java", "-jar", "docker-springplus.jar"]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom" ,"-jar", "app.jar"]

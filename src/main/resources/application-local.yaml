@@ -1,8 +1,9 @@
 spring:
-
+  config:
+    import: optional:file:.env[.properties]
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DB_NAME}?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DB_NAME}
     username: ${MYSQL_NAME}
     password: ${MYSQL_PASSWORD}
   jpa:
@@ -16,3 +17,17 @@ spring:
 jwt:
   secret:
     key: ${JWT_SECRET_KEY}
+
+
+cloud:
+  aws:
+    s3:
+      bucket: ${BUCKET_NAME}  # {버킷명}
+    credentials:
+      access-key: ${BUCKET_ACCESS_KEY}
+      secret-key: ${BUCKET_SECRET_KEY}
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false

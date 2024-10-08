@@ -39,7 +39,7 @@ out/
 ### ENV ###
 
 src/main/resources/properties/dev.env
-.env
+.env*
 env.properties
 propertyConfig
 ## resources ###
