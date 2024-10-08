@@ -22,7 +22,7 @@ jwt:
 cloud:
   aws:
     s3:
-      bucket: ${BUCKET_NAME}  # {버킷명}
+      bucket: ${BUCKET_NAME}
     credentials:
       access-key: ${BUCKET_ACCESS_KEY}
       secret-key: ${BUCKET_SECRET_KEY}
