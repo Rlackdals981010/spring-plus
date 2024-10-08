@@ -1,7 +1,10 @@
 # LV3. 12 AWS
-## 1 AWS로 jar 실행
-![스크린샷 2024-10-07 오후 3 53 51](https://github.com/user-attachments/assets/7e5bb864-e714-4f02-b845-ca33befee05e)
-
+## 헬스 체크로 연동 확인
+![포스트맨 헬스체크](https://github.com/user-attachments/assets/2d02a8dd-ab41-4d12-98ca-b7b884b66f16)
+## EC2
+![인스턴스](https://github.com/user-attachments/assets/80d10116-7321-4ddd-9ebf-c2a5fb666d3b)
+## DB
+![db](https://github.com/user-attachments/assets/0ad3721f-4e14-4f8e-990e-ca6fc575d63d)
 
 # LV3. 13 대용량 데이터 조회
 
