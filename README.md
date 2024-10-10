@@ -1,6 +1,9 @@
 # LV3. 12 AWS
 ## 헬스 체크로 연동 확인
 ![포스트맨 헬스체크](https://github.com/user-attachments/assets/2d02a8dd-ab41-4d12-98ca-b7b884b66f16)
+
+[참고사이트 (토스 테그블로그)](https://toss.tech/article/how-to-work-health-check-in-spring-boot-actuator)
+
 ## EC2
 ![인스턴스](https://github.com/user-attachments/assets/80d10116-7321-4ddd-9ebf-c2a5fb666d3b)
 ## DB
