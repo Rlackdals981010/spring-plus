@@ -51,8 +51,11 @@
 [참고사이트 (토스 테그블로그)](https://toss.tech/article/how-to-work-health-check-in-spring-boot-actuator)
 
 ## EC2
+EC2는 이미 삭제되어있음.
+
 ![인스턴스](https://github.com/user-attachments/assets/80d10116-7321-4ddd-9ebf-c2a5fb666d3b)
 ## DB
+RDS는 이미 삭제되어있음.
 ![db](https://github.com/user-attachments/assets/0ad3721f-4e14-4f8e-990e-ca6fc575d63d)
 ## S3로 이미지 업로드, 삭제, 및 버킷 정책
 
